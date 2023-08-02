@@ -6,7 +6,7 @@
 /*   By: vtrevisa <vtrevisa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:36:47 by vtrevisa          #+#    #+#             */
-/*   Updated: 2023/08/02 18:09:15 by vtrevisa         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:20:22 by vtrevisa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_args
 int	arg_error(void);
 /*INIT*/
 int	check_args(int argc, char **argv);
+void	init_data(int argc, char **argv, t_data *data);
 /*TIME*/
 
 /*UTILS*/

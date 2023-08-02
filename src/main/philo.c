@@ -6,7 +6,7 @@
 /*   By: vtrevisa <vtrevisa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:35:56 by vtrevisa          #+#    #+#             */
-/*   Updated: 2023/08/02 18:08:24 by vtrevisa         ###   ########.fr       */
+/*   Updated: 2023/08/02 18:12:13 by vtrevisa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ int	main(int argc, char **argv) //number_of_philosophers - time_to_die - time_to
 	/*Check Args*/
 	check_args(argc, argv);
 	/*Fill Data*/
+	init_data(argc, argv, &data);
 	/*Create fork*/
 	/*Create Args*/
 	/*Create Philos*/
