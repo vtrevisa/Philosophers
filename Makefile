@@ -1,42 +1,62 @@
-#--STANDARTD--
-NAME	= philisophers
+#--STANDARD--
+NAME	= philosophers
 #CFLAGS	= -Wall -Wextra -Werror -g3
-#SRCD	= ./src/
-OBJD	= ./objects
-#HEADER	= ./include/philosophers.h
+CFLAGS = -g
+VPATH	= $(addprefix $(SRC_D)/, $(DIRS))
 
-#--MANDATORY--
-SRC		= philo.c
-OBJ		= $(addprefix $(OBJD)/, $(SRC:.c=.o))
+#--DIRS--
+SRC_D		= ./src/
+DIRS		= . actions init time main utils Error
+OBJ_D		= ./objects
+INCLUDE_D	= ./include
 
-#LIBFT
-LIBFT	=$(addprefix $(LPATH)/, libft.a)
-LPATH	=./Libft
+#--FILES--
+SRC		= $(ACT) $(INIT) $(TIME) $(MAIN) $(UTIL) $(ERROR)
 
-#TEST
-#TC		=thread_test.c
-#TC		=deadlock_test.c
-TC		=timestamp_test.c
+ACT		= routine.c
+INIT	= init.c
+TIME	= time.c
+MAIN	= philo.c
+UTIL	= utils.c
+ERROR	= error.c
+
+HEADERS	= ./include/philo.h
+INCLUDE	= -I $(INCLUDE_D) 
+
+#--OBJECTS--
+OBJ		= $(SRC:%.c=$(OBJ_D)/%.o)
+
+#--COLORS--
+WHITE	=	\e[00m
+GREEN	=	\e[32m
+RED		=	\e[91m
+YELLOW	=	\e[033m
+BLUE	=	\e[34m
+
+NUMBER_OF_SRC_FILES	=	$(words $(SRC))
+PROGRESS			=	0
 
 all: $(NAME)
-	./$(NAME)
 
-$(NAME): $(LIBFT) $(OBJ) #$(HEADER)
-	cc $(OBJ) $(LIBFT) $(CFLAGS) -o $(NAME)
+$(NAME): $(OBJ) $(OBJ_D) $(HEADERS)
+	@echo "$(BLUE)Compiling $(WHITE)Philosophers"
+	@cc $(CFLAGS) $(INCLUDE) $(OBJ) -lreadline -o $@
+	@echo "$(GREEN)Compiled $(WHITE)Philosophers"
 
-$(LIBFT):
-	$(MAKE) -C $(LPATH)
+$(OBJ_D)/%.o: %.c Makefile | $(OBJ_D)
+	@cc -c $(CFLAGS) $< -o $@
+	@echo -n "$(YELLOW)Compiling $(WHITE)$$(( $(PROGRESS) * 100 / $(NUMBER_OF_SRC_FILES)))%\r"
+	$(eval PROGRESS=$(shell echo $$(($(PROGRESS)+1))))
 
-$(OBJD)/%.o: $(SRC)
-	mkdir -p $(OBJD)
-	cc -c $< -o $@
-test:	$(LIBFT)
-	gcc $(TC) $(LIBFT)
-	./a.out
+$(OBJ_D):
+	@mkdir -p $@
+
 clean:
-	rm -rf $(OBJD)
+	@echo "$(BLUE)Removing $(WHITE)Philosophers objects"
+	@rm -rf $(OBJ_D)
 
 fclean: clean
-	rm -rf $(NAME)
+	@echo "$(BLUE)Removing $(WHITE)$(NAME)"
+	@rm -rf $(NAME)
 
 re: fclean all

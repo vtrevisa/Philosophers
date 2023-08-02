@@ -1,42 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   thread_test.c                                      :+:      :+:    :+:   */
+/*   data_race_test.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vtrevisa <vtrevisa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/05 15:36:28 by vtrevisa          #+#    #+#             */
-/*   Updated: 2023/06/05 16:45:11 by vtrevisa         ###   ########.fr       */
+/*   Updated: 2023/07/27 16:12:11 by vtrevisa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <pthread.h>
-#include "./Libft/Include/libft.h"
+#include "../include/philo.h"
 
-int mails = 0;
-
-void	*routine()
+typedef struct s_data
 {
-	int i = 0;
-	
+	int	mails;
+	pthread_mutex_t mutex;
+} t_data;
+
+void	*routine(void *data)
+{
+	int	i;
+	t_data	*ndata;
+
+	ndata = (t_data *)data;
+	i = 0;
 	while (i < 100000)
 	{
-		mails++;
+		pthread_mutex_lock(&ndata->mutex);
+		ndata->mails += 1;
 		i++;
+		pthread_mutex_unlock(&ndata->mutex);
 	}
 }
 
 int	main(int argc, char **argv)
 {
+	t_data data;
 	pthread_t p1, p2;
 
-	if (pthread_create(&p1, NULL, &routine, NULL) != 0)
+	data.mails = 0;
+	pthread_mutex_init(&data.mutex, NULL);
+
+	if (pthread_create(&p1, NULL, &routine, &data) != 0)
 	{
 		return (1);
 	}
-	if (pthread_create(&p2, NULL, &routine, NULL) != 0)
+	if (pthread_create(&p2, NULL, &routine, &data) != 0)
 	{
 		return (2);
 	}
@@ -48,6 +61,6 @@ int	main(int argc, char **argv)
 	{
 		return (4);
 	}
-	ft_printf("Number of mails: %d\n", mails);
+	printf("Number of mails: %d\n", data.mails);
 	return (0);
 }
