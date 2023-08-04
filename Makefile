@@ -6,19 +6,20 @@ VPATH	= $(addprefix $(SRC_D)/, $(DIRS))
 
 #--DIRS--
 SRC_D		= ./src/
-DIRS		= . actions init time main utils Error
+DIRS		= . actions init time main utils Error testes
 OBJ_D		= ./objects
 INCLUDE_D	= ./include
 
 #--FILES--
-SRC		= $(ACT) $(INIT) $(TIME) $(MAIN) $(UTIL) $(ERROR)
+SRC		= $(ACT) $(INIT) $(TIME) $(MAIN) $(UTIL) $(ERROR) $(TESTES)
 
 ACT		= routine.c
-INIT	= init.c
+INIT	= init.c create.c
 TIME	= time.c
 MAIN	= philo.c
 UTIL	= utils.c
 ERROR	= error.c
+TESTES	= testes.c
 
 HEADERS	= ./include/philo.h
 INCLUDE	= -I $(INCLUDE_D) 

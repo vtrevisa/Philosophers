@@ -6,7 +6,7 @@
 /*   By: vtrevisa <vtrevisa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:35:56 by vtrevisa          #+#    #+#             */
-/*   Updated: 2023/08/02 18:12:13 by vtrevisa         ###   ########.fr       */
+/*   Updated: 2023/08/03 16:27:33 by vtrevisa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,14 @@ int	main(int argc, char **argv) //number_of_philosophers - time_to_die - time_to
 	t_data		data;
 
 	/*Check Args*/
-	check_args(argc, argv);
+	if (check_args(argc, argv))
+		return (1);
 	/*Fill Data*/
 	init_data(argc, argv, &data);
 	/*Create fork*/
+	fork = create_forks(&data);
 	/*Create Args*/
+	args = create_args(&data, fork);
 	/*Create Philos*/
 	/*Set Simulation*/
 	/*Join*/
