@@ -6,7 +6,7 @@
 /*   By: vtrevisa <vtrevisa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 15:32:58 by vtrevisa          #+#    #+#             */
-/*   Updated: 2023/08/02 17:53:22 by vtrevisa         ###   ########.fr       */
+/*   Updated: 2023/08/04 15:31:12 by vtrevisa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,11 @@ int	is_all_num(char *str)
 		i++;
 	}
 	return (0);
+}
+
+void	print_action(long long time, int philo, char *action, t_data *data)
+{
+	pthread_mutex_lock(&(data->lock_print));
+	printf("%-5lld %i %s\n", time, philo, action);
+	pthread_mutex_unlock(&(data->lock_print));
 }

@@ -6,7 +6,7 @@
 /*   By: vtrevisa <vtrevisa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 15:21:53 by vtrevisa          #+#    #+#             */
-/*   Updated: 2023/08/03 16:24:18 by vtrevisa         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:16:37 by vtrevisa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ t_args	*create_args(t_data *data, t_fork *fork)
 	{
 		args[i].nbr = i + 1;
 		args[i].must_eat = 0;
-		args[i].last_meal = time_now();
 		args[i].next_meal = args[i].last_meal + data->time.die; //Probably wrong, need to fix later
 		args[i].left_fork = &fork[i];
 		if (data->nbr_philos == 1)
@@ -51,3 +50,20 @@ t_args	*create_args(t_data *data, t_fork *fork)
 	}
 	return (args);
 }
+
+pthread_t	*create_philos(t_data *data, t_args *args)
+{
+	pthread_t	*philos;
+	int			i;
+
+	i = -1;
+	philos = malloc(sizeof(pthread_t) * data->nbr_philos);
+	args->data->starting_time = time_now();
+	while (++i < data->nbr_philos)
+	{
+		args[i].last_meal = args->data->starting_time;
+		pthread_create(&philos[i], NULL, &routine, (void *)&args[i]);
+	}
+	return (philos);
+}
+

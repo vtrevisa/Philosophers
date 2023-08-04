@@ -6,7 +6,7 @@
 /*   By: vtrevisa <vtrevisa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:36:47 by vtrevisa          #+#    #+#             */
-/*   Updated: 2023/08/03 16:20:07 by vtrevisa         ###   ########.fr       */
+/*   Updated: 2023/08/04 16:17:35 by vtrevisa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ typedef struct s_args
 	int			iterations;
 	long long	last_meal;
 	long long	next_meal;
-	t_fork			*right_fork;
-	t_fork			*left_fork;
+	t_fork		*right_fork;
+	t_fork		*left_fork;
 	t_data		*data;
 } t_args;
 
 /*-----ACTIONS-----*/
-
+void	*routine(void *args);
 /*-----ERROR-----*/
 int	arg_error(void);
 /*-----INIT-----*/
@@ -71,12 +71,13 @@ void	init_data(int argc, char **argv, t_data *data);
 /*CREATE_FORKS.C*/
 t_fork	*create_forks(t_data *data);
 t_args	*create_args(t_data *data, t_fork *fork);
+pthread_t	*create_philos(t_data *data, t_args *args);
 /*-----TIME-----*/
 long long	time_now(void);
 /*-----UTILS-----*/
 int	ft_atoi(const char *str);
 int	is_all_num(char *str);
-
+void	print_action(long long time, int philo, char *action, t_data *data);
 /*TESTES*/
 void	show_forks(t_fork *fork, t_data *data);
 void	show_args(t_args *args, t_data *data);
