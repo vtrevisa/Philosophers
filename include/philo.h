@@ -6,7 +6,7 @@
 /*   By: vtrevisa <vtrevisa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:36:47 by vtrevisa          #+#    #+#             */
-/*   Updated: 2023/08/29 14:37:03 by vtrevisa         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:59:37 by vtrevisa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ void			init_data(int argc, char **argv, t_data *data);
 int				**organize_line(int nbr);
 
 	/*-----MAIN-----*/
+/*FREE.C*/
+void			free_all(t_args *args, pthread_t *philos, t_fork *fork, t_data *data);
 /*MANAGER.C*/
 void			manager(t_args *args, t_data *data);
 int				simulation_status(t_data *data);

@@ -6,7 +6,7 @@
 /*   By: vtrevisa <vtrevisa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 17:35:56 by vtrevisa          #+#    #+#             */
-/*   Updated: 2023/08/29 14:33:40 by vtrevisa         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:59:26 by vtrevisa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@ int	main(int argc, char **argv)
 	philos = create_philos(&data, args);
 	manager(args, &data);
 	join_philos(&data, philos);
+	free_all(args, philos, fork, &data);
 	return (0);
 }
