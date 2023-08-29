@@ -6,7 +6,7 @@
 /*   By: vtrevisa <vtrevisa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 15:29:55 by vtrevisa          #+#    #+#             */
-/*   Updated: 2023/08/29 16:22:25 by vtrevisa         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:23:36 by vtrevisa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	*one_philo_routine(void	*args)
 	print_action(time, philo->nbr, "has taken a fork", philo->data);
 	wait(philo->data->time.die, philo->data->starting_time);
 	pthread_mutex_unlock(&(philo->left_fork->mutex));
-	return ;
+	return (NULL);
 }
 
 static int	fork_free(t_fork *fork)
@@ -55,5 +55,5 @@ void	*routine(void *args)
 		to_sleep(philo, philo->nbr);
 		to_think(philo, philo->nbr);
 	}
-	return ;
+	return (NULL);
 }
