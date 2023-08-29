@@ -1,6 +1,6 @@
 #include "../include/philo.h"
 
-static void	fill_even_matrix_order(int **m, int size)
+static void	fill_even_matrix_line(int **m, int size)
 {
 	int	i;
 	int	j;
@@ -23,12 +23,12 @@ static void	fill_even_matrix_order(int **m, int size)
 	}
 }
 
-static void	fill_odd_matrix_order(int **m, int size)
+static void	fill_odd_matrix_line(int **m, int size)
 {
 	int	i;
 	int	j;
 
-	fill_even_matrix_order(m, size);
+	fill_even_matrix_line(m, size);
 	m[0][size - 1] = 0;
 	i = 2;
 	while (i < size)
@@ -48,33 +48,33 @@ static void	fill_odd_matrix_order(int **m, int size)
 	}
 }
 
-static int	**create_matrix_order(int nbr_of_philos)
+static int	**create_matrix_line(int nbr_of_philos)
 {
-	int	**order;
+	int	**line;
 	int	i;
 
-	order = malloc(sizeof(int *) * nbr_of_philos);
+	line = malloc(sizeof(int *) * nbr_of_philos);
 	i = 0;
 	while (i < nbr_of_philos)
 	{
-		order[i] = malloc(sizeof(int) * nbr_of_philos);
+		line[i] = malloc(sizeof(int) * nbr_of_philos);
 		i++;
 	}
 	if (nbr_of_philos == 1)
-		order[0][0] = 1;
+		line[0][0] = 1;
 	else if (nbr_of_philos % 2 == 0)
-		fill_even_matrix_order(order, nbr_of_philos);
+		fill_even_matrix_line(line, nbr_of_philos);
 	else
-		fill_odd_matrix_order(order, nbr_of_philos);
-	return (order);
+		fill_odd_matrix_line(line, nbr_of_philos);
+	return (line);
 }
 
 int	main(void)
 {
 	t_data data;
 	data.nbr_philos = 5;
-	data.order = create_matrix_order(data.nbr_philos);
-	printf("Order Matrix\n");
+	data.line = create_matrix_line(data.nbr_philos);
+	printf("line Matrix\n");
 	printf("  ");
 	for (int i = 0; i < data.nbr_philos; i++)
 		printf("| %d ", i);
@@ -83,7 +83,7 @@ int	main(void)
 	{
 		printf("%d |", i);
 		for(int j = 0; j <data.nbr_philos;j++)
-			printf(" %d |", data.order[i][j]);
+			printf(" %d |", data.line[i][j]);
 		printf("\n");
 	}
 }

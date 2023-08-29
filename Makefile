@@ -14,10 +14,10 @@ INCLUDE_D	= ./include
 SRC		= $(ACT) $(INIT) $(TIME) $(MAIN) $(UTIL) $(ERROR) $(TESTES)
 
 ACT		= routine.c
-INIT	= init.c create.c
+INIT	= init.c create.c line.c
 TIME	= time.c
-MAIN	= philo.c
-UTIL	= utils.c
+MAIN	= philo.c manager.c
+UTIL	= utils.c utils2.c
 ERROR	= error.c
 TESTES	= testes.c
 

@@ -6,86 +6,52 @@
 /*   By: vtrevisa <vtrevisa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 15:29:55 by vtrevisa          #+#    #+#             */
-/*   Updated: 2023/08/04 16:21:03 by vtrevisa         ###   ########.fr       */
+/*   Updated: 2023/08/29 14:32:30 by vtrevisa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/philo.h"
 
-void	take_fork(t_args *args, int nbr)
-{
-	long long time;
-
-	if (nbr % 2)
-	{
-		pthread_mutex_lock(&(args->left_fork->mutex));
-		pthread_mutex_lock(&(args->right_fork->mutex));
-	}
-	else
-	{
-		pthread_mutex_lock(&(args->right_fork->mutex));
-		pthread_mutex_lock(&(args->left_fork->mutex));
-	}
-	args->left_fork->free = 0;
-	args->right_fork->free = 0;
-	time = time_now() - args->data->starting_time;
-	print_action(time, nbr, "has taken a fork", args->data);
-	time = time_now() - args->data->starting_time;
-	print_action(time, nbr, "has taken a fork", args->data);
-}
-
-static void	to_eat(t_args *args, int nbr)
+void	*one_philo_routine(void	*args)
 {
 	long long	time;
-	long long	eating_start;
-	
-	/*take_fork*/
-	take_fork(args, nbr);
-	/*eat*/
-	eating_start = time_now();
-	time = time_now() - args->data->starting_time;
-	print_action(time, nbr, "is eating", args->data);
-	usleep (args->data->time.eat);
-	args->last_meal = time_now();
-	/*drop fork*/
-	pthread_mutex_unlock(&(args->left_fork->mutex));
-	pthread_mutex_unlock(&(args->right_fork->mutex));
-	args->left_fork->free = 1;
-	args->right_fork->free = 1;
+	t_args		*philo;
+
+	philo = (t_args *)args;
+	pthread_mutex_lock(&(philo->left_fork->mutex));
+	philo->left_fork->free = 0;
+	time = time_now() - philo->data->starting_time;
+	print_action(time, philo->nbr, "has taken a fork", philo->data);
+	wait(philo->data->time.die, philo->data->starting_time);
+	pthread_mutex_unlock(&(philo->left_fork->mutex));
 }
 
-static void	to_sleep(t_args *args, int	nbr)
+static int	fork_free(t_fork *fork)
 {
-	int	time;
+	int	free;
 
-	time = time_now() - args->data->starting_time;
-	print_action(time, nbr, "is sleeping", args->data);
-	usleep(args->data->time.sleep);
-}
-
-static void	to_think(t_args *args, int nbr)
-{
-	int	time;
-
-	time - time_now() - args->data->starting_time;
-	print_action(time, nbr, "is thinking", args->data);
-	if (args->data->nbr_philos % 2)
-		usleep(args->data->time.eat * 3);
-	else
-		usleep(args->data->time.eat * 2);
+	pthread_mutex_lock(&(fork->mutex));
+	free = fork->free;
+	pthread_mutex_unlock(&(fork->mutex));
+	return (free);
 }
 
 void	*routine(void *args)
 {
 	t_args	*philo;
-	while (1)
+
+	philo = (t_args *)args;
+	if (philo->next_meal)
+		usleep(philo->next_meal * 1000 * 0.9);
+	while (simulation_status(philo->data) != 0)
 	{
-		philo = (t_args *)args;
-		/*EAT*/
+		if (!fork_free(philo->left_fork) || !fork_free(philo->right_fork))
+		{
+			usleep (500);
+			continue ;
+		}
 		to_eat(philo, philo->nbr);
-		/*SLEEP*/
 		to_sleep(philo, philo->nbr);
-		/*THINK*/
 		to_think(philo, philo->nbr);
 	}
 }

@@ -17,7 +17,7 @@
 	}
 } */
 
-int	main(void)
+/* int	main(void)
 {
 	struct timeval	time;
 
@@ -29,4 +29,19 @@ int	main(void)
 	}
 
 	return (0);
+} */
+
+int	main(void)
+{
+	struct timeval time;
+	long long titme = 200;
+	titme = 200;
+	gettimeofday(&time, NULL);
+	printf("started at %ld\n", time.tv_usec);
+	while (1)
+	{
+		usleep(titme * 0.9 * 1000);
+		gettimeofday(&time, NULL);
+		printf("now is %ld\n", time.tv_usec);
+	}
 }
