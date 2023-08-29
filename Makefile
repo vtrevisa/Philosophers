@@ -1,5 +1,5 @@
 #--STANDARD--
-NAME	= philosophers
+NAME	= philo
 #CFLAGS	= -Wall -Wextra -Werror -g3
 CFLAGS = -g
 VPATH	= $(addprefix $(SRC_D)/, $(DIRS))
@@ -13,7 +13,7 @@ INCLUDE_D	= ./include
 #--FILES--
 SRC		= $(ACT) $(INIT) $(TIME) $(MAIN) $(UTIL) $(ERROR) $(TESTES)
 
-ACT		= routine.c
+ACT		= routine.c actions.c
 INIT	= init.c create.c line.c
 TIME	= time.c
 MAIN	= philo.c manager.c

@@ -6,7 +6,7 @@
 /*   By: vtrevisa <vtrevisa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 15:30:41 by vtrevisa          #+#    #+#             */
-/*   Updated: 2023/08/29 14:14:42 by vtrevisa         ###   ########.fr       */
+/*   Updated: 2023/08/29 14:48:41 by vtrevisa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	check_args(int argc, char **argv)
 	if (argc < 5 || argc > 6)
 		return (arg_error());
 	else if (check_argv(argc, argv))
-		return (arg_error());
+		return (1);
 	else
 		return (0);
 }
