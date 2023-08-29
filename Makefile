@@ -1,6 +1,6 @@
 #--STANDARD--
 NAME	= philo
-#CFLAGS	= -Wall -Wextra -Werror -g3
+CFLAGS	= -Wall -Wextra -Werror -g3
 CFLAGS = -g
 VPATH	= $(addprefix $(SRC_D)/, $(DIRS))
 
@@ -41,7 +41,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ) $(OBJ_D) $(HEADERS)
 	@echo "$(BLUE)Compiling $(WHITE)Philosophers"
-	@cc $(CFLAGS) $(INCLUDE) $(OBJ) -lreadline -o $@
+	@cc $(CFLAGS) $(INCLUDE) $(OBJ) -lreadline -lpthread -o $@
 	@echo "$(GREEN)Compiled $(WHITE)Philosophers"
 
 $(OBJ_D)/%.o: %.c Makefile | $(OBJ_D)
